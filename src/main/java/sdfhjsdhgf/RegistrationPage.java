@@ -15,20 +15,35 @@ public class RegistrationPage {
         return driver.findElement(registrationError).getText();
     }
 
-    public void clickRegister() {
+    public RegistrationPage clickRegister() {
         driver.findElement(registerBtn).click();
+        return this;
     }
 
-    public void enterPassword(String password) {
+    public RegistrationPage enterPassword(String password) {
         driver.findElement(passwordField).sendKeys(password);
+        return this;
     }
 
-    public void enterEmail(String email) {
+    public FieldValidationImageState checkValidationImageForLoginField(){
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        driver.findElement(passwordField).
+        String cssValue = driver.findElement(loginField).getCssValue("background-image");
+        return FieldValidationImageState.GREEN_IMAGE;
+    }
+
+    public RegistrationPage enterEmail(String email) {
         driver.findElement(emailField).sendKeys(email);
+        return this;
     }
 
-    public void enterLogin(String login) {
+    public RegistrationPage enterLogin(String login) {
         driver.findElement(loginField).sendKeys(login);
+        return this;
     }
 
     public RegistrationPage(WebDriver driver) {

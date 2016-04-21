@@ -1,32 +1,53 @@
 package sdfhjsdhgf;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class GitHubRegistration {
+    private WebDriver driver;
+    private MainPage mainPage;
+    private RegistrationPage registrationPage;
 
+
+    @Before
+    public void preCondition() {
+        driver = new FirefoxDriver();
+        mainPage = new MainPage(driver);
+        registrationPage = new RegistrationPage(driver);
+    }
 
     @Test
-    public void negativeTest() {
-        WebDriver driver = new FirefoxDriver();
-        MainPage mainPage = new MainPage(driver);
-        RegistrationPage registrationPage = new RegistrationPage(driver);
-
-        mainPage.open();
-        mainPage.clickRegister();
-
-        registrationPage.enterLogin("sakjdhskjdhaksjhdkasjhd");
-        registrationPage.enterEmail("sakjdhskjdhaksjhdkasjhd");
-        registrationPage.enterPassword("sakjdhskjdhaksjhdkasjhd");
-        registrationPage.clickRegister();
+    public void checkErrorMessage() {
+        mainPage.open()
+                .clickRegister();
+        registrationPage.enterLogin("sakjdhskjdhaksjhdkasjhd")
+                .enterEmail("sakjdhskjdhaksjhdkasjhd")
+                .enterPassword("sakjdhskjdhaksjhdkasjhd")
+                .clickRegister();
 
         String actualText = registrationPage.getErrorMessageText();
         String expectedText = "There were problems creating your account.";
 
         Assert.assertEquals(actualText, expectedText);
+    }
 
+    @Test
+    public void checkInvalidInputImage(){
+        mainPage.open()
+                .clickRegister();
+        registrationPage.enterLogin("asdasd")
+                .checkValidationImageForLoginField();
+
+
+    }
+
+    @After
+    public void postCondition() {
         driver.close();
     }
 }

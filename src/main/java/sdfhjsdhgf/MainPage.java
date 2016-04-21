@@ -13,11 +13,13 @@ public class MainPage {
         this.driver = driver;
     }
 
-    public void clickRegister() {
+    public MainPage clickRegister() {
         driver.findElement(registerButton).click();
+        return this;
     }
 
-    public void open() {
+    public MainPage open() {
         driver.get(URL);
+        return this;
     }
 }
